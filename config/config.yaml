@@ -1,0 +1,14 @@
+telegram_bot:
+  token:
+
+instagram:
+  username:
+  password:
+
+database:
+  uri: postgres://instracker:password@localhost:5432/instracker
+#  uri: postgres://instracker:password@database/instracker
+
+dialogue: /go/app/etc/dialogue.json
+vault: /var/tmp/
+logging: /var/log/instracker/
