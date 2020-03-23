@@ -12,15 +12,12 @@
   "UNSUBSCRIBE_error": "Sorry, but you are not able to unsubscribe, because you are not subscribed yet.",
   "UNSUBSCRIBE_confirmation_error": "You didn't confirmed your unsubscription.",
 
+  "UNFOLLOWERS_LIST_ok": "Here you go!",
   "UNFOLLOWERS_LIST_error": "Sorry...\nI couldn't get a list of unfollowers.\n\nPlease, try again later.",
 
-  "CANCEL_ok": "The command has been cancelled. Anything else I can do for you?\n\nSend /help for a list of commands...",
-  "CANCEL_error": "No active command to cancel. I wasn't doing anything anyway. Zzzzz...",
-
-  "INSTAGRAM_user_not_found": "User with this username doesn't exist on Instagram\n\nType /cancel to cancel the opearation.",
-  "INSTAGRAM_user_is_private": "This user has a private profile.",
-
-  "USER_does_not_exist_error": "Please, send me /start for register.",
+  "ERROR_user_does_not_exist": "Please, send me /start for register.",
+  "ERROR_instagram_user_not_found": "User with this username doesn't exist on Instagram\n\nType /start to cancel the opearation.",
+  "ERROR_instagram_user_is_private": "This user has a private profile.",
 
   "DEFAULT": "Send me /help to see a list of commands"
 }

@@ -3,6 +3,7 @@ package telegrambotapi
 import (
 	"Instracker/internal/config"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	log "github.com/sirupsen/logrus"
 )
 
 // NewTelegramBotAPI create an instance of Bot
@@ -30,15 +31,17 @@ func (i *TelegramBotAPI) GetUpdatesChanel() (tgbotapi.UpdatesChannel, error) {
 }
 
 // Send sends message to user
-func (i *TelegramBotAPI) Send(userID int64, text string) (err error) {
+func (i *TelegramBotAPI) Send(userID int64, text string) {
 	msg := tgbotapi.NewMessage(userID, text)
-	_, err = i.API.Send(msg)
+	_, err := i.API.Send(msg)
+	log.WithError(err)
 	return
 }
 
 // SendDocument sends a document to user
-func (i *TelegramBotAPI) SendDocument(userID int64, file interface{}) (err error) {
+func (i *TelegramBotAPI) SendDocument(userID int64, file interface{}) {
 	msg := tgbotapi.NewDocumentUpload(userID, file)
-	_, err = i.API.Send(msg)
+	_, err := i.API.Send(msg)
+	log.WithError(err)
 	return
 }

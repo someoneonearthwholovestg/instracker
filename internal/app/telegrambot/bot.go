@@ -1,18 +1,25 @@
 package telegrambot
 
 import (
+	"Instracker/internal/app/telegrambot/db"
 	"Instracker/internal/box"
 	"Instracker/pkg"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
-	"os"
-
 	log "github.com/sirupsen/logrus"
+	"os"
 )
 
 type InstaBot struct {
 	Box     *box.Box
 	Answers map[string]string
 }
+
+const (
+	stateZERO            = iota // 0
+	stateLISTUNFOLLOWERS        // 1
+	stateSUBSCRIBE              // 2
+	stateUNSUBSCRIBE            // 3
+)
 
 func NewInstaBot(b *box.Box) (*InstaBot, error) {
 	answers, err := pkg.GetMapFromJSON(b.Config.Dialogue)
@@ -45,7 +52,7 @@ func (i *InstaBot) Run() {
 			continue
 		}
 
-		go i.Manager(update)
+		go i.Manage(update)
 
 		log.WithFields(log.Fields{
 			"user_id":    update.Message.Chat.ID,
@@ -53,29 +60,50 @@ func (i *InstaBot) Run() {
 			"first_name": update.Message.Chat.FirstName,
 			"last_name":  update.Message.Chat.LastName,
 			"message":    update.Message.Text,
-		}).Info("new request")
+		}).Info("MESSAGE")
 	}
 }
 
-// Manager is a router for message handlers
-func (i *InstaBot) Manager(update tgbotapi.Update) {
-	if err := i.Box.TelegramBotAPI.Send(update.Message.Chat.ID, "hi"); err != nil {
-		log.WithError(err)
+// Manage plays router role to set an appropriate state for user
+func (i *InstaBot) Manage(update tgbotapi.Update) {
+	var msg = update.Message.Text
+	switch msg {
+	case "/start":
+		i.CommandsHandler(update, msg, stateZERO)
+	case "/help":
+		i.CommandsHandler(update, msg, stateZERO)
+	case "/listunfollowers":
+		i.CommandsHandler(update, msg, stateLISTUNFOLLOWERS)
+	case "/subscribe":
+		i.CommandsHandler(update, msg, stateSUBSCRIBE)
+	case "/unsubscribe":
+		i.CommandsHandler(update, msg, stateUNSUBSCRIBE)
+	default:
+		i.Handler(update, msg)
 	}
-	//switch update.Message.Text {
-	//case "/start":
-	//	i.commonHandler(update, update.Message.Text, stateZERO)
-	//case "/help":
-	//	i.commonHandler(update, update.Message.Text, stateZERO)
-	//case "/listunfollowers":
-	//	i.commonHandler(update, update.Message.Text, stateLISTUNFOLLOWERS)
-	//case "/subscribe":
-	//	i.commonHandler(update, update.Message.Text, stateSUBSCRIBE)
-	//case "/unsubscribe":
-	//	i.commonHandler(update, update.Message.Text, stateUNSUBSCRIBE)
-	//case "/cancel":
-	//	i.cancelHandler(update)
-	//default:
-	//	i.statesHandler(update)
-	//}
+}
+
+// CommandsHandler processes format commands like "/{command}"
+func (i *InstaBot) CommandsHandler(
+	update tgbotapi.Update,
+	msg string,
+	state int,
+) {
+	i.Box.TelegramBotAPI.Send(update.Message.Chat.ID, i.Answers[msg])
+
+	db.CreateOrUpdateUser(i.Box.Database.Conn, &db.User{
+		ID:        update.Message.Chat.ID,
+		Username:  update.Message.Chat.UserName,
+		FirstName: update.Message.Chat.FirstName,
+		LastName:  update.Message.Chat.LastName,
+		State:     state,
+	})
+}
+
+// Handler checks user state and then does some stuff for this state
+func (i *InstaBot) Handler(
+	update tgbotapi.Update,
+	msg string,
+) {
+	i.Box.TelegramBotAPI.Send(update.Message.Chat.ID, msg)
 }
