@@ -105,5 +105,30 @@ func (i *InstaBot) Handler(
 	update tgbotapi.Update,
 	msg string,
 ) {
-	i.Box.TelegramBotAPI.Send(update.Message.Chat.ID, msg)
+	//state, err := db.GetUserState(i.Box.Database.Conn, update.Message.Chat.ID)
+	//	//if err != nil {
+	//	//	i.Box.TelegramBotAPI.Send(update.Message.Chat.ID, i.Answers["ERROR_user_does_not_exist"])
+	//	//	return
+	//	//}
+	//	//
+	//	//switch state {
+	//	//case stateZERO:
+	//	//	i.Box.TelegramBotAPI.Send(update.Message.Chat.ID, i.Answers["DEFAULT"])
+	//	//case stateSUBSCRIBE:
+	//	//	db.SubscribeUser(i, update)
+	//	//	db.CreateOrUpdateUser(i.Box.Database.Conn, &db.User{
+	//	//		ID:        update.Message.Chat.ID,
+	//	//		Username:  update.Message.Chat.UserName,
+	//	//		FirstName: update.Message.Chat.FirstName,
+	//	//		LastName:  update.Message.Chat.LastName,
+	//	//		State:     state,
+	//	//	})
+	//	//	//case stateUNSUBSCRIBE:
+	//	//	//	defer createOrUpdateUser(i.db, update, stateZERO)
+	//	//	//	unsubscribeUser(i, update)
+	//	//	//case stateLISTUNFOLLOWERS:
+	//	//	//	createOrUpdateUser(i.db, update, stateZERO)
+	//	//	//	getListUnfollowers(i, update)
+	//	//}
+
 }
