@@ -13,17 +13,17 @@ func main() {
 
 	configPath, found := os.LookupEnv("CFG_PATH")
 	if !found {
-		panic(errors.New("no config path variable"))
+		Panic(errors.New("no config path variable"))
 	}
 
 	b, err := box.InitializeBox(configPath)
 	if err != nil {
-		panic(err)
+		Panic(err)
 	}
 
 	tgbot, err := telegrambot.NewInstaBot(b)
 	if err != nil {
-		panic(err)
+		Panic(err)
 	}
 
 	tgbot.Run()
