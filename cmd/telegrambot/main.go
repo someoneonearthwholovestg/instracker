@@ -18,12 +18,12 @@ func main() {
 
 	b, err := box.InitializeBox(configPath)
 	if err != nil {
-		panic(err)
+		print(err)
 	}
 
 	tgbot, err := telegrambot.NewInstaBot(b)
 	if err != nil {
-		panic(err)
+		print(err)
 	}
 
 	tgbot.Run()
