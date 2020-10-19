@@ -6,7 +6,7 @@ instagram:
   password:
 
 database:
-  uri: postgres://instracker:password@localhost:5432/instracker
+  uri: postgres://tmtgfpnbvuyiai:c32e835c7ba01c8a232511640c74ab1c7d80b194e43cf983cf1aff05ff874796@ec2-54-165-164-38.compute-1.amazonaws.com:5432/dfmrbpsmr05oqq
 #  uri: postgres://instracker:password@database/instracker
 
 dialogue: /go/app/etc/dialogue.json
