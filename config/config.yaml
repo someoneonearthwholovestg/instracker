@@ -1,12 +1,12 @@
 telegram_bot:
-  token: 1398554872:AAFfwlpZrYf6iIpfx1ok1vGij4BU5Kj6kFk
+  token: os.Getenv("token")
 
 instagram:
-  username: ig_notifierrr
-  password: nabilanavab
+  username: os.Getenv("username")
+  password: os.Getenv("password")
 
 database:
-  uri: postgres://tmtgfpnbvuyiai:c32e835c7ba01c8a232511640c74ab1c7d80b194e43cf983cf1aff05ff874796@ec2-54-165-164-38.compute-1.amazonaws.com:5432/dfmrbpsmr05oqq
+  uri: os.Getenv("uri")
 #  uri: postgres://instracker:password@database/instracker
 
 dialogue: /go/app/etc/dialogue.json
